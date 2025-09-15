@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DESARRROLLO DE APLICACIONES 1</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4ae287;
+      --secondary-color: #2c3e50;
+      --background-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --card-background: #2d2d2d;
+      --header-background: #121212;
+    }
+  
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.pinimg.com/736x/48/3f/f9/483ff9a030003ac9b4620e76d55c637c.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* Overlay para mejorar la legibilidad */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 26, 0.7);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header {
+      background-color: var(--header-background);
+      color: white;
+      padding: 2em 1em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      opacity: 0.7;
+      z-index: 0;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-left {
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .header-left h2 {
+      color: #f7f0f0;
+      margin: 0.5em 0 0;
+      font-size: 1.2em;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2em auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background-color: var(--card-background);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(74, 226, 135, 0.2);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+
+    .card h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.5em;
+      border-bottom: 2px solid rgba(74, 226, 135, 0.3);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 i {
+      margin-right: 10px;
+    }
+
+    .card p {
+      text-align: justify;
+      margin-bottom: 15px;
+    }
+
+    .card ul {
+      padding-left: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .card li::marker {
+      color: var(--primary-color);
+    }
+
+
+    footer {
+      background-color: var(--secondary-color);
+      color: white;
+      text-align: center;
+      padding: 2em;
+      margin-top: 3em;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .header-left {
+        text-align: center;
+      }
+
+      nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .recursos-container {
+        grid-template-columns: 1fr;
+      }
+
+      .header-left h1 {
+        font-size: 2em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 20px;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <h1><i class="fas fa-mobile-alt"></i> DESARRROLLO DE APLICACIONES 1</h1>
+        <h2>Matias Urcuhuaranga Frank Diego</h2>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="tareas_por_semanas.html"><i class="fas fa-tasks"></i> Tareas por Semanas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="introduccion" class="card">
+      <h2><i class="fas fa-info-circle"></i> Introducción</h2>
+      <p> El curso de Desarrollo de Aplicaciones I introduce a los estudiantes en el mundo de la programación y la creación de software. Su objetivo es brindar las bases necesarias para comprender cómo se diseñan, estructuran y desarrollan aplicaciones, fomentando la lógica, la resolución de problemas y el uso de buenas prácticas de programación.
+
+<li>Este curso representa el inicio del camino en el área del desarrollo de software, preparando al estudiante para enfrentar proyectos más complejos y aplicando sus conocimientos en situaciones prácticas y reales.</p>
+    </section>
+
+    <section id="¿Que es GitHub?" class="card">
+      <h2><i class="fas fa-bullseye"></i> ¿Que es GitHub?</h2>
+      <ul>
+        <li>GitHub es una plataforma en línea que permite almacenar, compartir y colaborar en proyectos de software.
+           Funciona como un espacio en la nube donde los programadores pueden guardar su código y trabajar en equipo de manera organizada.</li>
+           <h2><i class="fas fa-bullseye"></i> ¿Como me registre en GitHub?</h2>
+        <li>Entre a github.com y hize clic en Sign up</li>
+        <li>Ingrese tmi correo, usuario y contraseña.</li>
+        <li>Complete la verificación de seguridad.</li>
+          <li>Confirme mi cuenta desde mi correo electrónico.</li>
+            <li>Eligi el plan gratuito y ajuste las configuraciones.</li>
+      </ul>
+    </section>
+
+    <section id="YO" class="card">
+      <h2><i class="fas fa-list-ul"></i> YO</h2>
+      <ul>
+        <li>Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo.
+           Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer.
+            Me considero responsable, organizado y con una actitud positiva, lo que me permite adaptarme a 
+            distintas situaciones y trabajar bien tanto de manera individual como en equipo.</li>
+            <img src="FOTOS/FOTO1.jpeg" width="80%" style="display: block; margin: 0 auto;">
+      </ul>
+    </section>
+
+    
+
+   
+  </main>
+
+  <footer>
+    <p>&copy; 2025 DESARRROLLO DE APLICACIONES 1</p>
+  </footer>
+</body>
+</html>

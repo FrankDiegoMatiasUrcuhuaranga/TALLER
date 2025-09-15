@@ -1,0 +1,796 @@
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tareas por Semanas - DESARRROLLO DE APLICACIONES 1</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4ae287;
+      --secondary-color: #2c3e50;
+      --background-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --card-background: #2d2d2d;
+      --header-background: #121212;
+    }
+
+   body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.pinimg.com/1200x/17/e7/55/17e755686a5229697f8098122bc494e7.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 26, 0.7);
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    header {
+      background-color: var(--header-background);
+      color: white;
+      padding: 2em 1em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      opacity: 0.7;
+      z-index: 0;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-left {
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .header-left h2 {
+      color: #f7f0f0;
+      margin: 0.5em 0 0;
+      font-size: 1.2em;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(74, 226, 135, 0.3);
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+      transform: translateY(-3px);
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 3em auto;
+      padding: 0 20px;
+    }
+
+    .semanas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 25px;
+      min-height: 600px;
+    }
+
+    .semana {
+      background-color: var(--card-background);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid rgba(74, 226, 135, 0.2);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .semana::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .semana:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      border-color: var(--primary-color);
+    }
+
+    .semana-titulo {
+      background: linear-gradient(135deg, var(--primary-color), #3a7bc8);
+      color: white;
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .semana-titulo:hover {
+      background: linear-gradient(135deg, #3a7bc8, var(--primary-color));
+    }
+
+    .semana-titulo i {
+      transition: transform 0.3s ease;
+    }
+
+    .semana-titulo.active i {
+      transform: rotate(180deg);
+    }
+
+    /* NUEVA SECCIÓN: Área de imagen central */
+    .semana-imagen-container {
+      position: relative;
+      height: 200px;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .semana-imagen {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .semana-imagen:hover {
+      transform: scale(1.05);
+    }
+
+    .imagen-placeholder {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(45deg, var(--primary-color), #3a7bc8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: white;
+      opacity: 0.7;
+    }
+
+    .tareas {
+      display: none;
+      padding: 20px;
+      flex-grow: 1;
+      overflow-y: auto;
+      max-height: 300px;
+    }
+
+    .tareas.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tarea {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .tarea:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left-color: var(--primary-color);
+      transform: translateX(5px);
+    }
+
+    .tarea input[type="checkbox"] {
+      margin-right: 15px;
+      margin-top: 3px;
+      transform: scale(1.2);
+    }
+
+    .tarea-contenido {
+      flex-grow: 1;
+    }
+
+    .tarea-contenido label {
+      font-weight: bold;
+      color: var(--primary-color);
+      cursor: pointer;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .tarea-contenido p {
+      margin: 8px 0;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .tarea-completada .tarea-contenido {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .progreso-semana {
+      margin: 15px 20px 20px;
+      height: 8px;
+      background-color: #444;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progreso-barra {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), #3a7bc8);
+      transition: width 0.5s ease;
+      border-radius: 4px;
+    }
+
+    .tarea-contenido-visible {
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+      max-height: 250px;
+      overflow-y: auto;
+      color: #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-size: 0.85em;
+    }
+
+    .btn-ver-contenido, .btn-descargar, .btn-ver-github {
+      margin: 5px 5px 0 0;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .btn-ver-contenido {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-descargar {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-ver-github {
+      background-color: #333;
+      color: white;
+    }
+
+    .btn-ver-contenido:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    .btn-descargar:hover {
+      background-color: #1e7e34;
+      transform: translateY(-2px);
+    }
+
+    .btn-ver-github:hover {
+      background-color: #555;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background-color: var(--secondary-color);
+      color: white;
+      text-align: center;
+      padding: 2em;
+      margin-top: 3em;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .semanas-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .semanas-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .header-left {
+        text-align: center;
+      }
+
+      .header-left h1 {
+        font-size: 2em;
+      }
+
+      .semanas-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+      }
+
+      .semana {
+        min-height: auto;
+      }
+
+      .btn-ver-contenido, .btn-descargar, .btn-ver-github {
+        width: 100%;
+        margin: 3px 0;
+      }
+
+      .semana-imagen-container {
+        height: 150px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav a {
+        padding: 10px 15px;
+        font-size: 0.9em;
+      }
+
+      .semana-titulo {
+        padding: 15px;
+        font-size: 1em;
+      }
+
+      .tareas {
+        padding: 15px;
+      }
+
+      .semana-imagen-container {
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <h1><i class="fas fa-tasks"></i> TAREAS POR SEMANAS</h1>
+        <h2>Matias Urcuhuaranga Frank Diego</h2>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Volver a la página principal</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div id="tareas-container" class="semanas-grid">
+      <!-- Las semanas se generarán dinámicamente aquí -->
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 DESARRROLLO DE APLICACIONES 1</p>
+  </footer>
+
+  <script>
+    const tareasData = [
+      {
+        semana: 1,
+        imagen:'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg', // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-mobile-alt', // Ícono de respaldo
+        tareas: [
+          { 
+            id: 1, 
+            descripcion: 'TAREA 1: QUE ES GIT?', 
+            archivo: 'QGIT.pdf', 
+            tipo: 'pdf',
+            enunciado: ''
+
+           },
+  {
+    id: 2, // Cambiado de 1 a 2
+    descripcion: 'TAREA 2: Apache Maven', // Actualizada la descripción
+    archivo: 'TRABAJO1.pdf',
+    tipo: 'pdf',
+    enunciado: '' // Agregado contenido
+  
+
+          },          
+        ]
+      },
+      {
+        semana: 2,
+        imagen: null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-code',
+        tareas: [
+          { 
+            id: 2, 
+            descripcion: 'TAREA 1:', 
+            archivo: 'TRABAJO2.pdf', 
+            tipo: 'pdf',
+            enunciado: ''
+          },
+        ]
+      },
+      {
+        semana: 3,
+        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-terminal',
+        tareas: [
+          { 
+            id: 3, 
+            descripcion: 'Ejercicio 1', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 4, 
+            descripcion: 'Ejercicio 2', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 5, 
+            descripcion: 'Ejercicio 3', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      },
+      {
+        semana: 4,
+        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-laptop-code',
+        tareas: [
+          { 
+            id: 6, 
+            descripcion: 'Ejercicio 1:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 7, 
+            descripcion: 'Ejercicio 2:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 8, 
+            descripcion: 'Ejercicio 3:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      },
+      {
+        semana: 5,
+        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-puzzle-piece',
+        tareas: [
+          { 
+            id: 9, 
+            descripcion: 'Ejercicio 1:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 10, 
+            descripcion: 'Ejercicio 2:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 11, 
+            descripcion: 'Ejercicio 3:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      },
+      {
+        semana: 6,
+        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-tasks',
+        tareas: [
+          { 
+            id: 15, 
+            descripcion: 'Ejercicio 1:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          },
+          { 
+            id: 16, 
+            descripcion: 'Ejercicio 2:', 
+            archivo: '', 
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      },
+      {
+        semana: 7,
+        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-project-diagram',
+        tareas: [
+          {
+            id: 19,
+            descripcion: 'Ejercicio 1:',
+            archivo: '',
+            tipo: '',
+            enunciado: ''
+          },
+          {
+            id: 20,
+            descripcion: 'Ejercicio 2:',
+            archivo: '',
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      },
+      {
+        semana: 8,
+        imagen:  'https://i.pinimg.com/1200x/d0/bf/fd/d0bffd2724251b9c49a63f761c47e6c7.jpg', // Puedes cambiar esta URL por tu imagen
+        icono: 'fas fa-trophy',
+        tareas: [
+          {
+            id: 23,
+            descripcion: 'Ejercicio 1:',
+            archivo: '',
+            tipo: '',
+            enunciado: ''
+          },
+          {
+            id: 24,
+            descripcion: 'Ejercicio 2:',
+            archivo: '',
+            tipo: '',
+            enunciado: ''
+          }
+        ]
+      }
+    ];
+
+    function generarTareas() {
+      const container = document.getElementById('tareas-container');
+      tareasData.forEach(semana => {
+        const semanaElement = document.createElement('div');
+        semanaElement.className = 'semana';
+        
+        // Determinar si usar imagen o ícono de respaldo
+        const imagenContent = semana.imagen 
+          ? `<img src="${semana.imagen}" alt="Semana ${semana.semana}" class="semana-imagen" onerror="this.parentElement.innerHTML='<div class=\\"imagen-placeholder\\"><i class=\\"${semana.icono}\\"></i></div>'">` 
+          : `<div class="imagen-placeholder"><i class="${semana.icono}"></i></div>`;
+        
+        semanaElement.innerHTML = `
+          <div class="semana-titulo" onclick="toggleSemana(this)">
+            <span>Semana ${semana.semana}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="semana-imagen-container">
+            ${imagenContent}
+          </div>
+          <div class="tareas">
+            ${semana.tareas.map(tarea => `
+              <div class="tarea">
+                <input type="checkbox" id="tarea-${tarea.id}" onchange="marcarTarea(this)">
+                <div class="tarea-contenido">
+                  <label for="tarea-${tarea.id}">${tarea.descripcion}</label>
+                  <p>${tarea.enunciado}</p>
+                  <button class="btn-ver-contenido" onclick="mostrarContenido('${tarea.archivo}', '${tarea.tipo}', ${tarea.id})">Ver contenido</button>
+                  <button class="btn-descargar" onclick="descargarArchivo('${tarea.archivo}')">Descargar</button>
+                  <button class="btn-ver-github" onclick="verEnGitHub('${tarea.archivo}')">GitHub</button>
+                </div>
+              </div>
+              <div id="contenido-${tarea.id}" style="display:none;"></div>
+            `).join('')}
+          </div>
+          <div class="progreso-semana">
+            <div class="progreso-barra" style="width: 0%"></div>
+          </div>
+        `;
+        container.appendChild(semanaElement);
+      });
+    }
+
+    function toggleSemana(titulo) {
+      const tareas = titulo.nextElementSibling.nextElementSibling; // Saltamos el contenedor de imagen
+      const icono = titulo.querySelector('i');
+      
+      if (tareas.classList.contains('show')) {
+        tareas.classList.remove('show');
+        icono.className = 'fas fa-chevron-down';
+        titulo.classList.remove('active');
+      } else {
+        tareas.classList.add('show');
+        icono.className = 'fas fa-chevron-up';
+        titulo.classList.add('active');
+      }
+    }
+
+    function marcarTarea(checkbox) {
+      const tarea = checkbox.closest('.tarea');
+      const semana = checkbox.closest('.semana');
+      
+      if (checkbox.checked) {
+        tarea.classList.add('tarea-completada');
+      } else {
+        tarea.classList.remove('tarea-completada');
+      }
+      actualizarProgreso(semana);
+    }
+
+    function actualizarProgreso(semana) {
+      const totalTareas = semana.querySelectorAll('.tarea').length;
+      const tareasCompletadas = semana.querySelectorAll('.tarea-completada').length;
+      const porcentaje = (tareasCompletadas / totalTareas) * 100;
+      const barra = semana.querySelector('.progreso-barra');
+      barra.style.width = `${porcentaje}%`;
+    }
+
+    function mostrarContenido(archivo, tipo, id) {
+      // Para archivos locales, usamos rutas relativas
+      if (archivo === 'QGIT.pdf','TRABAJO1.pdf','TRABAJO2.pdf') {
+        // Para tu PDF local, simplemente abrirlo en nueva ventana
+        window.open('./' + archivo, '_blank');
+        return;
+      }
+
+      // Para archivos en GitHub
+      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/main/';
+      const url = baseUrl + archivo;
+      const contenidoDiv = document.getElementById(`contenido-${id}`);
+      
+      if (tipo === 'pdf') {
+        window.open(url, '_blank');
+      } else if (tipo === 'docx') {
+        alert('Los archivos DOCX no se pueden visualizar directamente en el navegador. Por favor, descarga el archivo para verlo.');
+      } else if (tipo === 'dart') {
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            contenidoDiv.innerHTML = `<pre class="tarea-contenido-visible"><code>${data}</code></pre>`;
+            contenidoDiv.style.display = contenidoDiv.style.display === 'none' ? 'block' : 'none';
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            contenidoDiv.innerHTML = '<p>Error al cargar el contenido. Por favor, intenta descargarlo.</p>';
+            contenidoDiv.style.display = 'block';
+          });
+      }
+    } 
+
+    function descargarArchivo(archivo) {
+      // Para archivos locales
+      if (archivo === 'QGIT.pdf') {
+        const link = document.createElement('a');
+        link.href = './' + archivo;
+        link.download = archivo;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+      }
+
+      // Para archivos en GitHub
+      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/raw/main/';
+      const url = baseUrl + archivo;
+      window.open(url, '_blank');
+    }
+
+    function verEnGitHub(archivo) {
+      // Para archivos locales, no hay GitHub
+      if (archivo === 'QGIT.pdf') {
+        alert('Este archivo está almacenado localmente en tu proyecto.');
+        return;
+      }
+
+      // Para archivos en GitHub
+      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/blob/main/';
+      const url = baseUrl + archivo;
+      window.open(url, '_blank');
+    }
+
+    // Generar tareas al cargar la página
+    window.addEventListener('load', generarTareas);
+  </script>
+</body>
+</html>
