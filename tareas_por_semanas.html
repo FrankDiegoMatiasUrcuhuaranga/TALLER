@@ -481,6 +481,7 @@
     archivo: 'TRABAJO1.pdf',
     tipo: 'pdf',
     enunciado: '' // Agregado contenido
+    
   
 
           },          
@@ -488,7 +489,7 @@
       },
       {
         semana: 2,
-        imagen: null, // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/d6/07/c9/d607c9b61e02347f2d0969a889ed3580.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-code',
         tareas: [
           { 
@@ -502,7 +503,7 @@
       },
       {
         semana: 3,
-        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        imagen:  'https://i.pinimg.com/736x/1a/45/1e/1a451e159838a95dec02d66f35975e6e.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-terminal',
         tareas: [
           { 
@@ -530,7 +531,7 @@
       },
       {
         semana: 4,
-        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        imagen:  'https://i.pinimg.com/736x/a2/61/3e/a2613e9caf059b0ad507c1cede626f01.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-laptop-code',
         tareas: [
           { 
@@ -558,7 +559,7 @@
       },
       {
         semana: 5,
-        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        imagen:  'https://i.pinimg.com/1200x/32/86/6d/32866d01701a71d7a9a378ca709f287e.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-puzzle-piece',
         tareas: [
           { 
@@ -586,7 +587,7 @@
       },
       {
         semana: 6,
-        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        imagen:  'https://i.pinimg.com/1200x/9a/00/9f/9a009fbfe7ac9eb9adf32dda702f0375.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-tasks',
         tareas: [
           { 
@@ -607,7 +608,7 @@
       },
       {
         semana: 7,
-        imagen:  null, // Puedes cambiar esta URL por tu imagen
+        imagen:  'https://i.pinimg.com/1200x/e2/b9/7e/e2b97eaa263fdff413cb9c4336b078ce.jpg', // Puedes cambiar esta URL por tu imagen
         icono: 'fas fa-project-diagram',
         tareas: [
           {
@@ -735,10 +736,10 @@
       }
 
       // Para archivos en GitHub
-      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/main/';
+      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/main/';
       const url = baseUrl + archivo;
       const contenidoDiv = document.getElementById(`contenido-${id}`);
-      
+
       if (tipo === 'pdf') {
         window.open(url, '_blank');
       } else if (tipo === 'docx') {
@@ -769,9 +770,8 @@
         document.body.removeChild(link);
         return;
       }
-
       // Para archivos en GitHub
-      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/raw/main/';
+      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/raw/main/';
       const url = baseUrl + archivo;
       window.open(url, '_blank');
     }
@@ -784,7 +784,7 @@
       }
 
       // Para archivos en GitHub
-      const baseUrl = 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TAREAS-APLICACIONES.github.io/blob/main/';
+      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/blob/main/';
       const url = baseUrl + archivo;
       window.open(url, '_blank');
     }
