@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -180,7 +180,6 @@
       transform: rotate(180deg);
     }
 
-    /* NUEVA SECCIÓN: Área de imagen central */
     .semana-imagen-container {
       position: relative;
       height: 200px;
@@ -356,6 +355,15 @@
       transform: translateY(-2px);
     }
 
+    .archivo-local {
+      background-color: #ffc107;
+      color: #212529;
+    }
+
+    .archivo-local:hover {
+      background-color: #e0a800;
+    }
+
     footer {
       background-color: var(--secondary-color);
       color: white;
@@ -464,187 +472,201 @@
     const tareasData = [
       {
         semana: 1,
-        imagen:'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg', // Puedes cambiar esta URL por tu imagen
-        icono: 'fas fa-mobile-alt', // Ícono de respaldo
+        imagen:'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg',
+        icono: 'fas fa-mobile-alt',
         tareas: [
           { 
             id: 1, 
             descripcion: 'TAREA 1: QUE ES GIT?', 
             archivo: 'QGIT.pdf', 
             tipo: 'pdf',
-            enunciado: ''
-
-           },
-  {
-    id: 2, // Cambiado de 1 a 2
-    descripcion: 'TAREA 2: Apache Maven', // Actualizada la descripción
-    archivo: 'TRABAJO1.pdf',
-    tipo: 'pdf',
-    enunciado: '' // Agregado contenido
-    
-  
-
+            enunciado: '',
+            esLocal: false // Cambiado a false porque ya está en GitHub
+          },
+          {
+            id: 2,
+            descripcion: 'TAREA 2: Apache Maven',
+            archivo: 'TRABAJO1.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false // Cambiado a false porque ya está en GitHub
           },          
         ]
       },
       {
         semana: 2,
-        imagen: 'https://i.pinimg.com/1200x/d6/07/c9/d607c9b61e02347f2d0969a889ed3580.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/d6/07/c9/d607c9b61e02347f2d0969a889ed3580.jpg',
         icono: 'fas fa-code',
         tareas: [
           { 
-            id: 2, 
+            id: 3, 
             descripcion: 'TAREA 1:', 
             archivo: 'TRABAJO2.pdf', 
             tipo: 'pdf',
-            enunciado: ''
+            enunciado: '',
+            esLocal: false // Cambiado a false porque ya está en GitHub
           },
         ]
       },
       {
         semana: 3,
-        imagen:  'https://i.pinimg.com/736x/1a/45/1e/1a451e159838a95dec02d66f35975e6e.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/736x/1a/45/1e/1a451e159838a95dec02d66f35975e6e.jpg',
         icono: 'fas fa-terminal',
         tareas: [
           { 
-            id: 3, 
-            descripcion: 'Ejercicio 1', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
-          },
-          { 
             id: 4, 
-            descripcion: 'Ejercicio 2', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            descripcion: 'Ejercicio 1', 
+            archivo: 'ejercicio3-1.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           { 
             id: 5, 
+            descripcion: 'Ejercicio 2', 
+            archivo: 'ejercicio3-2.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
+          },
+          { 
+            id: 6, 
             descripcion: 'Ejercicio 3', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio3-3.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       },
       {
         semana: 4,
-        imagen:  'https://i.pinimg.com/736x/a2/61/3e/a2613e9caf059b0ad507c1cede626f01.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/736x/a2/61/3e/a2613e9caf059b0ad507c1cede626f01.jpg',
         icono: 'fas fa-laptop-code',
         tareas: [
           { 
-            id: 6, 
-            descripcion: 'Ejercicio 1:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
-          },
-          { 
             id: 7, 
-            descripcion: 'Ejercicio 2:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            descripcion: 'Ejercicio 1:', 
+            archivo: 'ejercicio4-1.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           { 
             id: 8, 
+            descripcion: 'Ejercicio 2:', 
+            archivo: 'ejercicio4-2.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
+          },
+          { 
+            id: 9, 
             descripcion: 'Ejercicio 3:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio4-3.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       },
       {
         semana: 5,
-        imagen:  'https://i.pinimg.com/1200x/32/86/6d/32866d01701a71d7a9a378ca709f287e.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/32/86/6d/32866d01701a71d7a9a378ca709f287e.jpg',
         icono: 'fas fa-puzzle-piece',
         tareas: [
           { 
-            id: 9, 
-            descripcion: 'Ejercicio 1:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
-          },
-          { 
             id: 10, 
-            descripcion: 'Ejercicio 2:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            descripcion: 'Ejercicio 1:', 
+            archivo: 'ejercicio5-1.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           { 
             id: 11, 
+            descripcion: 'Ejercicio 2:', 
+            archivo: 'ejercicio5-2.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
+          },
+          { 
+            id: 12, 
             descripcion: 'Ejercicio 3:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio5-3.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       },
       {
         semana: 6,
-        imagen:  'https://i.pinimg.com/1200x/9a/00/9f/9a009fbfe7ac9eb9adf32dda702f0375.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/9a/00/9f/9a009fbfe7ac9eb9adf32dda702f0375.jpg',
         icono: 'fas fa-tasks',
         tareas: [
           { 
-            id: 15, 
+            id: 13, 
             descripcion: 'Ejercicio 1:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio6-1.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           { 
-            id: 16, 
+            id: 14, 
             descripcion: 'Ejercicio 2:', 
-            archivo: '', 
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio6-2.pdf', 
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       },
       {
         semana: 7,
-        imagen:  'https://i.pinimg.com/1200x/e2/b9/7e/e2b97eaa263fdff413cb9c4336b078ce.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/e2/b9/7e/e2b97eaa263fdff413cb9c4336b078ce.jpg',
         icono: 'fas fa-project-diagram',
         tareas: [
           {
-            id: 19,
-            descripcion: 'Ejercicio 1731247:',
-            archivo: '',
-            tipo: '',
-            enunciado: ''
+            id: 15,
+            descripcion: 'Ejercicio 1:',
+            archivo: 'ejercicio7-1.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           {
-            id: 20,
+            id: 16,
             descripcion: 'Ejercicio 2:',
-            archivo: '',
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio7-2.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       },
       {
         semana: 8,
-        imagen:  'https://i.pinimg.com/1200x/d0/bf/fd/d0bffd2724251b9c49a63f761c47e6c7.jpg', // Puedes cambiar esta URL por tu imagen
+        imagen: 'https://i.pinimg.com/1200x/d0/bf/fd/d0bffd2724251b9c49a63f761c47e6c7.jpg',
         icono: 'fas fa-trophy',
         tareas: [
           {
-            id: 23,
+            id: 17,
             descripcion: 'Ejercicio 1:',
-            archivo: '',
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio8-1.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           },
           {
-            id: 24,
+            id: 18,
             descripcion: 'Ejercicio 2:',
-            archivo: '',
-            tipo: '',
-            enunciado: ''
+            archivo: 'ejercicio8-2.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            esLocal: false
           }
         ]
       }
@@ -656,7 +678,6 @@
         const semanaElement = document.createElement('div');
         semanaElement.className = 'semana';
         
-        // Determinar si usar imagen o ícono de respaldo
         const imagenContent = semana.imagen 
           ? `<img src="${semana.imagen}" alt="Semana ${semana.semana}" class="semana-imagen" onerror="this.parentElement.innerHTML='<div class=\\"imagen-placeholder\\"><i class=\\"${semana.icono}\\"></i></div>'">` 
           : `<div class="imagen-placeholder"><i class="${semana.icono}"></i></div>`;
@@ -676,9 +697,15 @@
                 <div class="tarea-contenido">
                   <label for="tarea-${tarea.id}">${tarea.descripcion}</label>
                   <p>${tarea.enunciado}</p>
-                  <button class="btn-ver-contenido" onclick="mostrarContenido('${tarea.archivo}', '${tarea.tipo}', ${tarea.id})">Ver contenido</button>
-                  <button class="btn-descargar" onclick="descargarArchivo('${tarea.archivo}')">Descargar</button>
-                  <button class="btn-ver-github" onclick="verEnGitHub('${tarea.archivo}')">GitHub</button>
+                  <button class="btn-ver-contenido ${tarea.esLocal ? 'archivo-local' : ''}" onclick="mostrarContenido('${tarea.archivo}', '${tarea.tipo}', ${tarea.id}, ${tarea.esLocal})">
+                    ${tarea.esLocal ? 'Ver Local' : 'Ver contenido'}
+                  </button>
+                  <button class="btn-descargar ${tarea.esLocal ? 'archivo-local' : ''}" onclick="descargarArchivo('${tarea.archivo}', ${tarea.esLocal})">
+                    ${tarea.esLocal ? 'Descargar Local' : 'Descargar'}
+                  </button>
+                  <button class="btn-ver-github ${tarea.esLocal ? 'archivo-local' : ''}" onclick="verEnGitHub('${tarea.archivo}', ${tarea.esLocal})">
+                    ${tarea.esLocal ? 'No en GitHub' : 'GitHub'}
+                  </button>
                 </div>
               </div>
               <div id="contenido-${tarea.id}" style="display:none;"></div>
@@ -693,7 +720,7 @@
     }
 
     function toggleSemana(titulo) {
-      const tareas = titulo.nextElementSibling.nextElementSibling; // Saltamos el contenedor de imagen
+      const tareas = titulo.nextElementSibling.nextElementSibling;
       const icono = titulo.querySelector('i');
       
       if (tareas.classList.contains('show')) {
@@ -727,66 +754,48 @@
       barra.style.width = `${porcentaje}%`;
     }
 
-    function mostrarContenido(archivo, tipo, id) {
-      // Para archivos locales, usamos rutas relativas
-      if (archivo === 'QGIT.pdf','TRABAJO1.pdf','TRABAJO2.pdf') {
-        // Para tu PDF local, simplemente abrirlo en nueva ventana
-        window.open('./' + archivo, '_blank');
-        return;
-      }
-
-      // Para archivos en GitHub
-      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/main/';
-      const url = baseUrl + archivo;
+    function mostrarContenido(archivo, tipo, id, esLocal = false) {
+      // Ahora todos los archivos están en GitHub, así que removemos la lógica de archivos locales
+      
+      // URL correcta para tu repositorio GitHub Pages
+      const githubPagesUrl = `https://frankdiegomatiurcuhuaranga.github.io/TALLER/${archivo}`;
       const contenidoDiv = document.getElementById(`contenido-${id}`);
 
       if (tipo === 'pdf') {
-        window.open(url, '_blank');
+        // Abrir el PDF desde GitHub Pages
+        window.open(githubPagesUrl, '_blank');
       } else if (tipo === 'docx') {
         alert('Los archivos DOCX no se pueden visualizar directamente en el navegador. Por favor, descarga el archivo para verlo.');
       } else if (tipo === 'dart') {
-        fetch(url)
-          .then(response => response.text())
+        fetch(githubPagesUrl)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Archivo no encontrado en GitHub');
+            }
+            return response.text();
+          })
           .then(data => {
             contenidoDiv.innerHTML = `<pre class="tarea-contenido-visible"><code>${data}</code></pre>`;
             contenidoDiv.style.display = contenidoDiv.style.display === 'none' ? 'block' : 'none';
           })
           .catch(error => {
             console.error('Error:', error);
-            contenidoDiv.innerHTML = '<p>Error al cargar el contenido. Por favor, intenta descargarlo.</p>';
+            contenidoDiv.innerHTML = '<p>Error al cargar el contenido. Verifica que el archivo esté disponible en GitHub.</p>';
             contenidoDiv.style.display = 'block';
           });
       }
     } 
 
-    function descargarArchivo(archivo) {
-      // Para archivos locales
-      if (archivo === 'QGIT.pdf') {
-        const link = document.createElement('a');
-        link.href = './' + archivo;
-        link.download = archivo;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        return;
-      }
-      // Para archivos en GitHub
-      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/raw/main/';
-      const url = baseUrl + archivo;
-      window.open(url, '_blank');
+    function descargarArchivo(archivo, esLocal = false) {
+      // URL correcta para descargar desde GitHub (raw)
+      const githubRawUrl = `https://raw.githubusercontent.com/FrankDiegoMatiasUrcuhuaranga/TALLER/main/${archivo}`;
+      window.open(githubRawUrl, '_blank');
     }
 
-    function verEnGitHub(archivo) {
-      // Para archivos locales, no hay GitHub
-      if (archivo === 'QGIT.pdf') {
-        alert('Este archivo está almacenado localmente en tu proyecto.');
-        return;
-      }
-
-      // Para archivos en GitHub
-      const baseUrl = 'https://frankdiegomatiasurcuhuaranga.github.io/TALLER/.github.io/blob/main/';
-      const url = baseUrl + archivo;
-      window.open(url, '_blank');
+    function verEnGitHub(archivo, esLocal = false) {
+      // URL correcta para ver el archivo en GitHub
+      const githubUrl = `https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/${archivo}`;
+      window.open(githubUrl, '_blank');
     }
 
     // Generar tareas al cargar la página
