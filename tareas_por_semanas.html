@@ -321,7 +321,7 @@
       font-size: 0.85em;
     }
 
-    .btn-ver-contenido, .btn-descargar, .btn-ver-github {
+    .btn-descargar, .btn-ver-github {
       margin: 5px 5px 0 0;
       padding: 6px 12px;
       border: none;
@@ -332,11 +332,6 @@
       font-weight: bold;
     }
 
-    .btn-ver-contenido {
-      background-color: #007bff;
-      color: white;
-    }
-
     .btn-descargar {
       background-color: #28a745;
       color: white;
@@ -345,11 +340,6 @@
     .btn-ver-github {
       background-color: #333;
       color: white;
-    }
-
-    .btn-ver-contenido:hover {
-      background-color: #0056b3;
-      transform: translateY(-2px);
     }
 
     .btn-descargar:hover {
@@ -446,7 +436,7 @@
         min-height: auto;
       }
 
-      .btn-ver-contenido, .btn-descargar, .btn-ver-github {
+      .btn-descargar, .btn-ver-github {
         width: 100%;
         margin: 3px 0;
       }
@@ -508,7 +498,7 @@
         semana: 1,
         imagen:'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg',
         icono: 'fas fa-mobile-alt',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/semana1',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%201',
         tareas: [
           { 
             id: 1, 
@@ -520,12 +510,20 @@
           },
           {
             id: 2,
-            descripcion: 'TAREA 2: Apache Maven',
+            descripcion: 'TAREA 2: EJERCICIO 1',
             archivo: 'TRABAJO1.pdf',
             tipo: 'pdf',
             enunciado: '',
             githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/TRABAJO1.pdf'
-          },          
+          },     
+          {
+            id: 3,
+            descripcion: 'TAREA 2: EJERCICIO 2',
+            archivo: 'TRABAJO1.pdf',
+            tipo: 'pdf',
+            enunciado: '',
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/TRABAJO1.pdf'
+          },     
         ]
       },
       {
@@ -744,9 +742,6 @@
                 <div class="tarea-contenido">
                   <label for="tarea-${tarea.id}">${tarea.descripcion}</label>
                   <p>${tarea.enunciado}</p>
-                  <button class="btn-ver-contenido" onclick="mostrarContenido('${tarea.archivo}', '${tarea.tipo}', ${tarea.id})">
-                    Ver contenido
-                  </button>
                   <button class="btn-descargar" onclick="descargarArchivo('${tarea.archivo}')">
                     Descargar
                   </button>
@@ -755,7 +750,6 @@
                   </button>
                 </div>
               </div>
-              <div id="contenido-${tarea.id}" style="display:none;"></div>
             `).join('')}
           </div>
           <div class="progreso-semana">
@@ -800,36 +794,6 @@
       const barra = semana.querySelector('.progreso-barra');
       barra.style.width = `${porcentaje}%`;
     }
-
-    function mostrarContenido(archivo, tipo, id) {
-      // URL correcta para tu repositorio GitHub Pages
-      const githubPagesUrl = `https://frankdiegomatiurcuhuaranga.github.io/TALLER/${archivo}`;
-      const contenidoDiv = document.getElementById(`contenido-${id}`);
-
-      if (tipo === 'pdf') {
-        // Abrir el PDF desde GitHub Pages
-        window.open(githubPagesUrl, '_blank');
-      } else if (tipo === 'docx') {
-        alert('Los archivos DOCX no se pueden visualizar directamente en el navegador. Por favor, descarga el archivo para verlo.');
-      } else if (tipo === 'dart') {
-        fetch(githubPagesUrl)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Archivo no encontrado en GitHub');
-            }
-            return response.text();
-          })
-          .then(data => {
-            contenidoDiv.innerHTML = `<pre class="tarea-contenido-visible"><code>${data}</code></pre>`;
-            contenidoDiv.style.display = contenidoDiv.style.display === 'none' ? 'block' : 'none';
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            contenidoDiv.innerHTML = '<p>Error al cargar el contenido. Verifica que el archivo esté disponible en GitHub.</p>';
-            contenidoDiv.style.display = 'block';
-          });
-      }
-    } 
 
     function descargarArchivo(archivo) {
       // URL correcta para descargar desde GitHub (raw)
