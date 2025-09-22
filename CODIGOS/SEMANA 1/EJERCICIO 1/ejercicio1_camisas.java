@@ -1,23 +1,19 @@
 import java.awt.Color;
 import java.awt.Dimension;
 
-/**
- * @author Estudiante UPLA
- * Actividad 01 - Problema 1: Sistema de descuentos 7% + 7% para camisas
- */
+
 public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
 
     double precioCamisa, importeCompra, primerDescuento, segundoDescuento, descuentoTotal, importePagar;
     int cantidadUnidades;
-
-    // Constructor
+    
     public EJERCICIO1_CAMISAS() {
         initComponents();
         formulario();
         inicializarElementos();
     }
 
-    // Valores del Formulario - JFrame
+    
     private void formulario() {
         this.setTitle("Descuento 7% + 7% - Camisas");
         this.setLocationRelativeTo(this);
@@ -43,28 +39,27 @@ public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
         importeCompra = precioCamisa * cantidadUnidades;
     }
 
-    // Calcula el primer descuento (7% del importe de compra)
+   
     void calcularPrimerDescuento() {
         primerDescuento = 0.07 * importeCompra;
     }
 
-    // Calcula el segundo descuento (7% de lo que queda después del primer descuento)
+ 
     void calcularSegundoDescuento() {
         double importeDespuesPrimerDescuento = importeCompra - primerDescuento;
         segundoDescuento = 0.07 * importeDespuesPrimerDescuento;
     }
 
-    // Calcula el descuento total
+ 
     void calcularDescuentoTotal() {
         descuentoTotal = primerDescuento + segundoDescuento;
     }
 
-    // Calcula el importe a pagar
+ 
     void calcularImportePagar() {
         importePagar = importeCompra - descuentoTotal;
     }
 
-    // Muestra resultados
     void mostrarResultados() {
         this.txtSalida.setText("");
         imprimir("");
@@ -81,7 +76,7 @@ public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
         this.txtSalida.append(cad + "\n");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+                             
     private void initComponents() {
 
         panelCalcular = new javax.swing.JPanel();
@@ -203,7 +198,7 @@ public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }                       
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {                                            
         try {
@@ -231,7 +226,7 @@ public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
         System.exit(0);
     }                                        
 
-    // Variables declaration - do not modify                     
+                    
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSalir;
@@ -243,5 +238,5 @@ public class EJERCICIO1_CAMISAS extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrecioCamisa;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextArea txtSalida;
-    // End of variables declaration                   
+                     
 }
