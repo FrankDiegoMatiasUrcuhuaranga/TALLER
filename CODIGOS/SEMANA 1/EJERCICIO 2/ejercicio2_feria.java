@@ -1,22 +1,17 @@
 import java.awt.Color;
 import java.awt.Dimension;
 
-/**
- * @author Estudiante UPLA
- * Actividad 01 - Problema 2: Distribución de inversión en feria por rubros
- */
+
 public class EJERCICIO2_FERIA extends javax.swing.JFrame {
 
     double montoTotal, alquilerEspacio, publicidad, transporte, serviciosferiales, decoracion, gastosVarios;
 
-    // Constructor
     public EJERCICIO2_FERIA() {
         initComponents();
         formulario();
         inicializarElementos();
     }
 
-    // Valores del Formulario - JFrame
     private void formulario() {
         this.setTitle("Distribución de Inversión en Feria");
         this.setLocationRelativeTo(this);
@@ -37,30 +32,29 @@ public class EJERCICIO2_FERIA extends javax.swing.JFrame {
     }
 
     void calcularAlquilerEspacio() {
-        alquilerEspacio = 0.23 * montoTotal; // 23%
+        alquilerEspacio = 0.23 * montoTotal; 
     }
 
     void calcularPublicidad() {
-        publicidad = 0.07 * montoTotal; // 7%
+        publicidad = 0.07 * montoTotal; 
     }
 
     void calcularTransporte() {
-        transporte = 0.26 * montoTotal; // 26%
+        transporte = 0.26 * montoTotal; 
     }
 
     void calcularServiciosferiales() {
-        serviciosferiales = 0.12 * montoTotal; // 12%
+        serviciosferiales = 0.12 * montoTotal; 
     }
 
     void calcularDecoracion() {
-        decoracion = 0.21 * montoTotal; // 21%
+        decoracion = 0.21 * montoTotal; 
     }
 
     void calcularGastosVarios() {
-        gastosVarios = 0.11 * montoTotal; // 11%
+        gastosVarios = 0.11 * montoTotal; 
     }
 
-    // Muestra resultados
     void mostrarResultados() {
         this.txtSalida.setText("");
         imprimir("");
@@ -83,8 +77,7 @@ public class EJERCICIO2_FERIA extends javax.swing.JFrame {
     void imprimir(String cad) {
         this.txtSalida.append(cad + "\n");
     }
-
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+                         
     private void initComponents() {
 
         panelCalcular = new javax.swing.JPanel();
@@ -194,7 +187,7 @@ public class EJERCICIO2_FERIA extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }                       
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {                                            
         try {
@@ -221,8 +214,7 @@ public class EJERCICIO2_FERIA extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {                                         
         System.exit(0);
     }                                        
-
-    // Variables declaration - do not modify                     
+                    
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSalir;
@@ -231,6 +223,5 @@ public class EJERCICIO2_FERIA extends javax.swing.JFrame {
     private javax.swing.JPanel panelCalcular;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JTextField txtMontoTotal;
-    private javax.swing.JTextArea txtSalida;
-    // End of variables declaration                   
+    private javax.swing.JTextArea txtSalida;                 
 }
