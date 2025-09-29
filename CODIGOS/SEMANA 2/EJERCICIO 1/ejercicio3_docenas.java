@@ -1,23 +1,17 @@
 import java.awt.Color;
 import java.awt.Dimension;
 
-/**
- * @author Estudiante UPLA
- * Actividad 02 - Problema 1: Sistema de descuentos por docenas con obsequio de lapiceros
- */
 public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
 
     double precioDocena, importeCompra, importeDescuento, importePagar;
     int cantidadDocenas, cantidadLapiceros;
 
-    // Constructor
     public EJERCICIO3_DOCENAS() {
         initComponents();
         formulario();
         inicializarElementos();
     }
 
-    // Valores del Formulario - JFrame
     private void formulario() {
         this.setTitle("Sistema de Descuentos por Docenas");
         this.setLocationRelativeTo(this);
@@ -43,30 +37,26 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
         importeCompra = precioDocena * cantidadDocenas;
     }
 
-    // Calcula el descuento según la cantidad de docenas
     void calcularImporteDescuento() {
         if (cantidadDocenas >= 10) {
-            importeDescuento = 0.20 * importeCompra; // 20% de descuento
+            importeDescuento = 0.20 * importeCompra; 
         } else {
-            importeDescuento = 0.10 * importeCompra; // 10% de descuento
+            importeDescuento = 0.10 * importeCompra; 
         }
     }
 
-    // Calcula el importe a pagar
     void calcularImportePagar() {
         importePagar = importeCompra - importeDescuento;
     }
 
-    // Calcula la cantidad de lapiceros de obsequio
     void calcularCantidadLapiceros() {
         if (importePagar >= 200) {
-            cantidadLapiceros = 2 * cantidadDocenas; // 2 lapiceros por cada docena
+            cantidadLapiceros = 2 * cantidadDocenas; 
         } else {
-            cantidadLapiceros = 0; // No hay lapiceros de obsequio
+            cantidadLapiceros = 0; 
         }
     }
 
-    // Muestra resultados
     void mostrarResultados() {
         this.txtSalida.setText("");
         imprimir("");
@@ -85,7 +75,7 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
             imprimir("Lapiceros de obsequio : No hay obsequio");
         }
         imprimir("");
-        // Mostrar criterios aplicados
+        
         if (cantidadDocenas >= 10) {
             imprimir("Descuento aplicado: 20% (≥ 10 docenas)");
         } else {
@@ -96,8 +86,7 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
     void imprimir(String cad) {
         this.txtSalida.append(cad + "\n");
     }
-
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+                        
     private void initComponents() {
 
         panelCalcular = new javax.swing.JPanel();
@@ -219,7 +208,7 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }                       
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {                                            
         try {
@@ -245,8 +234,7 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {                                         
         System.exit(0);
     }                                        
-
-    // Variables declaration - do not modify                     
+                   
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSalir;
@@ -257,6 +245,5 @@ public class EJERCICIO3_DOCENAS extends javax.swing.JFrame {
     private javax.swing.JPanel panelDatos;
     private javax.swing.JTextField txtPrecioDocena;
     private javax.swing.JTextField txtCantidadDocenas;
-    private javax.swing.JTextArea txtSalida;
-    // End of variables declaration                   
+    private javax.swing.JTextArea txtSalida;                  
 }
