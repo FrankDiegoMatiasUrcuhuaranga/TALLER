@@ -1,0 +1,1 @@
+package com.figuras.modelo;\n\npublic enum Role { DOCENTE, ALUMNO }\n
