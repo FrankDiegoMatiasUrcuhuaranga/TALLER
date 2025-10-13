@@ -1,0 +1,29 @@
+sem5
+
+import java.util.Stack;
+
+public class pilasem05 {
+    public static void main (String[]args) {
+    
+    Stack<String> solicitudes = new Stack<>();
+    //apilar solicitudes
+    solicitudes.push("Solicitud 001 - Carlitos");
+    solicitudes.push("Solicitud 002 - Anderson");
+    solicitudes.push("Solicitud 002 - Andy");
+
+    //consultar top/peek
+    System.out.println(" Ultima solcidtud ingresada: "+solicitudes.peek());
+    //procesar
+    String procesada = solicitudes.pop();
+    System.out.println("procesando: "+procesada);
+
+    //estado actual de la pila
+    System.out.println("solicitudes pendientes: "+solicitudes);
+    //tamaño
+    System.out.println("Cantidad: "+solicitudes.size());
+
+    System.out.println("¿Esta vacia? "+ solicitudes.isEmpty());
+
+   }
+
+}
