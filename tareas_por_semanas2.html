@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tareas por Semanas - DESARRROLLO DE APLICACIONES 1</title>
+  <title>Tareas por Semanas 9-16 - DESARRROLLO DE APLICACIONES 1</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/brands.min.css">
   <style>
@@ -114,26 +114,16 @@
       border-color: var(--primary-color);
     }
 
-    /* Estilo especial para el botón de siguiente grupo */
-    .btn-siguiente-grupo {
-      background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-      border: 2px solid rgba(255, 107, 107, 0.5);
-      animation: pulse 2s infinite;
+    /* Estilo especial para el botón de volver */
+    .btn-volver-grupo {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      border: 2px solid rgba(52, 152, 219, 0.5);
     }
 
-    .btn-siguiente-grupo:hover {
-      background: linear-gradient(135deg, #ee5a6f, #ff6b6b);
-      border-color: #ff6b6b;
+    .btn-volver-grupo:hover {
+      background: linear-gradient(135deg, #2980b9, #3498db);
+      border-color: #3498db;
       color: white !important;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
-      }
-      50% {
-        box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
-      }
     }
 
     main {
@@ -502,13 +492,13 @@
   <header>
     <div class="header-content">
       <div class="header-left">
-        <h1><i class="fas fa-tasks"></i> TAREAS POR SEMANAS</h1>
+        <h1><i class="fas fa-tasks"></i> TAREAS POR SEMANAS (9-16)</h1>
         <h2>Matias Urcuhuaranga Frank Diego</h2>
       </div>
       <nav>
         <ul>
           <li><a href="index.html"><i class="fas fa-home"></i> Volver a la página principal</a></li>
-          <li><a href="tareas_por_semanas2.html" class="btn-siguiente-grupo"><i class="fas fa-arrow-right"></i> Ir a Semanas 9-16</a></li>
+          <li><a href="tareas_por_semanas.html" class="btn-volver-grupo"><i class="fas fa-arrow-left"></i> Volver a Semanas 1-8</a></li>
         </ul>
       </nav>
     </div>
@@ -527,183 +517,131 @@
   <script>
     const tareasData = [
       {
-        semana: 1,
-        imagen:'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg',
-        icono: 'fas fa-mobile-alt',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%201',
+        semana: 9,
+        imagen:'https://i.pinimg.com/1200x/f5/3c/2e/f53c2e8a9b4e5d6c7a8b9c0d1e2f3a4b.jpg',
+        icono: 'fas fa-code-branch',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209',
         tareas: [
           { 
-            id: 1, 
-            descripcion: 'TAREA 1: QUE ES GIT?', 
-            archivo: 'QGIT.pdf', 
+            id: 18, 
+            descripcion: 'TAREA 1: Descripción de la tarea', 
+            archivo: 'SEMANA9.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/QGIT.pdf'
-          },
-          {
-            id: 2,
-            descripcion: 'TAREA 2: EJERCICIO 1',
-            archivo: 'TRABAJO1.pdf',
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%201/EJERCICIO%201',
-          },     
-          {
-            id: 3,
-            descripcion: 'TAREA 2: EJERCICIO 2',
-            archivo: 'TRABAJO1.pdf',
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%201/EJERCICIO%202',
-          },     
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209'
+          }
         ]
       },
       {
-        semana: 2,
-        imagen: 'https://i.pinimg.com/1200x/d6/07/c9/d607c9b61e02347f2d0969a889ed3580.jpg',
-        icono: 'fas fa-code',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%202',
+        semana: 10,
+        imagen: 'https://i.pinimg.com/1200x/a3/4b/5c/a34b5c6d7e8f9a0b1c2d3e4f5a6b7c8d.jpg',
+        icono: 'fas fa-database',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010',
         tareas: [
           { 
-            id:1,
-            descripcion: 'TAREA 3: ejercicio 1',
-            archivo: 'TRABAJO2.pdf', 
+            id: 19,
+            descripcion: 'TAREA 1: Descripción de la tarea',
+            archivo: 'SEMANA10.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%202/EJERCICIO%201',
-          },
-          { 
-            id: 2,
-            descripcion: 'TAREA 3: ejercicio 2',  
-            archivo: 'TRABAJO2.pdf', 
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%202/EJERCICIO%202',
-          },
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010'
+          }
         ]
       },
       {
-        semana: 3,
-        imagen: 'https://i.pinimg.com/736x/1a/45/1e/1a451e159838a95dec02d66f35975e6e.jpg',
-        icono: 'fas fa-terminal',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203',
+        semana: 11,
+        imagen: 'https://i.pinimg.com/1200x/b4/5c/6d/b45c6d7e8f9a0b1c2d3e4f5a6b7c8d9e.jpg',
+        icono: 'fas fa-server',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011',
         tareas: [
           { 
-            id: 4, 
-            descripcion: 'TAREA 4: ejercicio 1', 
-            archivo: 'TRABAJO3.pdf', 
+            id: 20, 
+            descripcion: 'TAREA 1: Descripción de la tarea', 
+            archivo: 'SEMANA11.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%201'
-          },
-          { 
-            id: 5, 
-            descripcion: 'TAREA 4: ejercicio 2', 
-            archivo: 'TRABAJO3.pdf', 
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%202'
-          },
-        
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011'
+          }
         ]
       },
       {
-        semana: 4,
-        imagen: 'https://i.pinimg.com/736x/a2/61/3e/a2613e9caf059b0ad507c1cede626f01.jpg',
-        icono: 'fas fa-laptop-code',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204',
+        semana: 12,
+        imagen: 'https://i.pinimg.com/1200x/c5/6d/7e/c56d7e8f9a0b1c2d3e4f5a6b7c8d9e0f.jpg',
+        icono: 'fas fa-cogs',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012',
         tareas: [
           { 
-            id: 7, 
-            descripcion: 'TAREA 5: ejercicio 1',
-            archivo: 'TRABAJO4.pdf', 
+            id: 21, 
+            descripcion: 'TAREA 1: Descripción de la tarea',
+            archivo: 'SEMANA12.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%201'
-          },
-          { 
-            id: 8, 
-            descripcion: 'TAREA 5: ejercicio 2', 
-            archivo: 'TRABAJO5.pdf', 
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%202'
-          },
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012'
+          }
         ]
       },
       {
-        semana: 5,
-        imagen: 'https://i.pinimg.com/1200x/32/86/6d/32866d01701a71d7a9a378ca709f287e.jpg',
-        icono: 'fas fa-puzzle-piece',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205',
+        semana: 13,
+        imagen: 'https://i.pinimg.com/1200x/d6/7e/8f/d67e8f9a0b1c2d3e4f5a6b7c8d9e0f1a.jpg',
+        icono: 'fas fa-network-wired',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013',
         tareas: [
           { 
-            id: 10, 
-            descripcion: 'PRUEBA DE FUNCIONAMIENTO DEL LOGIN', 
-            archivo: 'PRUEBA DE FUNCIONANMIENTO DEL LOGIN .pdf', 
+            id: 22, 
+            descripcion: 'TAREA 1: Descripción de la tarea', 
+            archivo: 'SEMANA13.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205'
-          },
-      
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013'
+          }
         ]
       },
       {
-        semana: 6,
-        imagen: 'https://i.pinimg.com/1200x/9a/00/9f/9a009fbfe7ac9eb9adf32dda702f0375.jpg',
-        icono: 'fas fa-tasks',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206',
+        semana: 14,
+        imagen: 'https://i.pinimg.com/1200x/e7/8f/9a/e78f9a0b1c2d3e4f5a6b7c8d9e0f1a2b.jpg',
+        icono: 'fas fa-cloud',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014',
         tareas: [
           { 
-            id: 13, 
-            descripcion: 'FRONT END DE LA PAGINAA', 
-            archivo: 'TRABAJO6.pdf', 
+            id: 23, 
+            descripcion: 'TAREA 1: Descripción de la tarea', 
+            archivo: 'SEMANA14.pdf', 
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/FRONT%20END'
-          },
-          { 
-            id: 14, 
-            descripcion: 'BASE DE DATOSS', 
-            archivo: 'TRABAJO7.pdf', 
-            tipo: 'pdf',
-            enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/BASE%20DE%20DATOS'
-          },
-          
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014'
+          }
         ]
       },
       {
-        semana: 7,
-        imagen: 'https://i.pinimg.com/1200x/e2/b9/7e/e2b97eaa263fdff413cb9c4336b078ce.jpg',
-        icono: 'fas fa-project-diagram',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src',
+        semana: 15,
+        imagen: 'https://i.pinimg.com/1200x/f8/9a/0b/f89a0b1c2d3e4f5a6b7c8d9e0f1a2b3c.jpg',
+        icono: 'fas fa-rocket',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015',
         tareas: [
           {
-            id: 15,
-            descripcion: 'TRABAJO FINAL',
-            archivo: 'SEMANA 7 FINAL.pdf',
+            id: 24,
+            descripcion: 'TAREA 1: Descripción de la tarea',
+            archivo: 'SEMANA15.pdf',
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src'
-          },
-          
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015'
+          }
         ]
       },
       {
-        semana: 8,
-        imagen: 'https://i.pinimg.com/1200x/d0/bf/fd/d0bffd2724251b9c49a63f761c47e6c7.jpg',
-        icono: 'fas fa-trophy',
-        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro',
+        semana: 16,
+        imagen: 'https://i.pinimg.com/1200x/a9/0b/1c/a90b1c2d3e4f5a6b7c8d9e0f1a2b3c4d.jpg',
+        icono: 'fas fa-star',
+        githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016',
         tareas: [
           {
-            id: 17,
-            descripcion: 'TRABAJOO FINAL MEJORADO',
-            archivo: 'SEMANA 8.pdf',
+            id: 25,
+            descripcion: 'TAREA 1: Descripción de la tarea',
+            archivo: 'SEMANA16.pdf',
             tipo: 'pdf',
             enunciado: '',
-            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro'
-          },
+            githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016'
+          }
         ]
       }
     ];

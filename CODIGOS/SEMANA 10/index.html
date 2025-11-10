@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Calificación de Tesis</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #1a2633 0%, #253644 50%, #1a2633 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #2a3a4a 0%, #1f2d3d 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 0px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.1);
+            overflow: hidden;
+            max-width: 750px;
+            width: 100%;
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .container.active {
+            display: block;
+            animation: materializar 0.5s ease-out;
+        }
+
+        @keyframes materializar {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            padding: 50px 40px;
+            background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08), transparent);
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '⚔';
+            font-size: 50px;
+            display: block;
+            color: #d4af37;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.4);
+            margin-bottom: 12px;
+            animation: pulsar 2s infinite;
+        }
+
+        @keyframes pulsar {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .logo h1 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 2px 2px 8px rgba(0, 0, 0, 0.8);
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo p {
+            color: #b8c5d6;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 8px 0;
+            margin-top: 12px;
+            position: relative;
+        }
+
+        .logo p::before,
+        .logo p::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d4af37;
+            font-size: 10px;
+        }
+
+        .logo p::before {
+            left: 10px;
+        }
+
+        .logo p::after {
+            right: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #d4af37;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        label::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 14px;
+            animation: brillo 2s ease-in-out infinite;
+        }
+
+        @keyframes brillo {
+            0%, 100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(212, 175, 55, 1); }
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(26, 38, 51, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #e8e8e8;
+            font-size: 13px;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 0px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: rgba(26, 38, 51, 0.9);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(145deg, #d4af37 0%, #b8941f 100%);
+            color: #1a2332;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 25px rgba(212, 175, 55, 0.4);
+            position: relative;
+            overflow: hidden;
+            border-radius: 0px;
+            margin-top: 10px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            box-shadow: 0 8px 35px rgba(212, 175, 55, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #e8c547 0%, #d4af37 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .header {
+            background: linear-gradient(145deg, #2d3e50 0%, #1f2d3d 100%);
+            color: #d4af37;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5), 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #b8c5d6;
+            font-size: 14px;
+        }
+
+        .logout-btn, .back-btn {
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+            padding: 10px 24px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            border-radius: 0px;
+        }
+
+        .logout-btn:hover, .back-btn:hover {
+            background: linear-gradient(145deg, #d4af37 0%, #b8941f 100%);
+            color: #1a2332;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+            background: linear-gradient(to bottom, #253644 0%, #1f2d3d 100%);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(42, 58, 74, 0.8) 0%, rgba(31, 45, 61, 0.8) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-left: 3px solid #d4af37;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(212, 175, 55, 0.05);
+            position: relative;
+            border-radius: 0px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .card p {
+            color: #b8c5d6;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .tesis-item {
+            background: rgba(26, 38, 51, 0.6);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-left: 2px solid rgba(212, 175, 55, 0.5);
+            transition: all 0.3s;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 0px;
+        }
+
+        .tesis-item:hover {
+            box-shadow: 0 5px 25px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.2);
+            border-left-color: #d4af37;
+            transform: translateX(5px);
+            background: rgba(26, 38, 51, 0.8);
+        }
+
+        .tesis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tesis-title {
+            font-weight: 700;
+            color: #e8e8e8;
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+        }
+
+        .status {
+            padding: 6px 18px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid;
+            border-radius: 0px;
+        }
+
+        .status.pendiente {
+            background: rgba(212, 175, 55, 0.15);
+            color: #e8c547;
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .status.calificada {
+            background: rgba(80, 200, 120, 0.15);
+            color: #66dd99;
+            border-color: rgba(80, 200, 120, 0.5);
+            box-shadow: 0 0 10px rgba(80, 200, 120, 0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.1) 100%);
+            padding: 10px 24px;
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border-radius: 0px;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(145deg, #d4af37 0%, #b8941f 100%);
+            color: #1a2332;
+            border-color: #d4af37;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(45, 62, 80, 0.8) 0%, rgba(31, 45, 61, 0.8) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(212, 175, 55, 0.1);
+            border-radius: 0px;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotar 20s linear infinite;
+        }
+
+        @keyframes rotar {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.6), 0 0 50px rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #b8c5d6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(26, 38, 51, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #e8e8e8;
+            font-size: 14px;
+            font-family: 'Orbitron', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 0px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: rgba(26, 38, 51, 0.9);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-message, .success-message {
+            padding: 12px;
+            border-radius: 0px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(255, 50, 50, 0.2);
+            border: 1px solid rgba(255, 50, 50, 0.5);
+            color: #ff8888;
+        }
+
+        .success-message {
+            background: rgba(80, 200, 120, 0.2);
+            border: 1px solid rgba(80, 200, 120, 0.5);
+            color: #66dd99;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #253644;
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #d4af37, #b8941f);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #e8c547, #d4af37);
+        }
+
+        @media (max-width: 768px) {
+            .form-inline {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .login-container {
+                padding: 40px 30px;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .logo::before {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE LOGIN -->
+    <div class="container active" id="loginContainer">
+        <div class="login-container">
+            <div class="logo">
+                <h1>⚔ CODEX THESIS ⚔</h1>
+                <p>Adeptus Administratum - Sistema Imperial</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="rol">DESIGNACIÓN DE RANGO ◆</label>
+                    <select id="rol" required>
+                        <option value="">-- Seleccione su Rango --</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="profesor">Profesor Calificador</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario">CÓDIGO DE IDENTIFICACIÓN ◆</label>
+                    <input type="text" id="usuario" placeholder="Ingrese código imperial" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">CLAVE DE ACCESO ◆</label>
+                    <input type="password" id="password" placeholder="Código de seguridad" required>
+                </div>
+
+                <button type="submit" class="btn">⚡ INICIAR TRANSMISIÓN ⚡</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD ESTUDIANTE -->
+    <div class="container" id="estudianteContainer">
+        <div class="dashboard" id="estudianteDashboard">
+            <div class="header">
+                <h2>👨‍🎓 Panel del Estudiante</h2>
+                <div class="user-info">
+                    <span id="estudianteNombre"></span>
+                    <div class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <h3>Mi Tesis</h3>
+                    <div class="tesis-item">
+                        <div class="tesis-header">
+                            <span class="tesis-title">Sistema de Gestión Académica basado en IA</span>
+                            <span class="status calificada">Calificada</span>
+                        </div>
+                        <p><strong>Asesor:</strong> Dr. Juan Pérez</p>
+                        <p><strong>Calificación:</strong> 18/20</p>
+                        <p><strong>Comentarios:</strong> Excelente trabajo de investigación. Se recomienda ampliar el capítulo de resultados.</p>
+                        <button class="btn-secondary">Ver Detalles</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Subir Nueva Versión</h3>
+                    <div class="form-group">
+                        <label>Documento de Tesis (PDF):</label>
+                        <input type="file" accept=".pdf">
+                    </div>
+                    <div class="form-group">
+                        <label>Comentarios:</label>
+                        <textarea placeholder="Describa los cambios realizados..."></textarea>
+                    </div>
+                    <button class="btn">Subir Documento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PROFESOR -->
+    <div class="container" id="profesorContainer">
+        <div class="dashboard" id="profesorDashboard">
+            <div class="header">
+                <h2>👨‍🏫 Panel del Profesor Calificador</h2>
+                <div class="user-info">
+                    <span id="profesorNombre"></span>
+                    <div class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Tesis Asignadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Pendientes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Calificadas</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Tesis Pendientes de Calificación</h3>
+                    
+                    <div class="tesis-item">
+                        <div class="tesis-header">
+                            <span class="tesis-title">Implementación de Blockchain en Sistemas Educativos</span>
+                            <span class="status pendiente">Pendiente</span>
+                        </div>
+                        <p><strong>Estudiante:</strong> María González</p>
+                        <p><strong>Fecha de entrega:</strong> 15/10/2025</p>
+                        <button class="btn-secondary" onclick="mostrarFormCalificacion(this)">Calificar</button>
+                    </div>
+
+                    <div class="tesis-item">
+                        <div class="tesis-header">
+                            <span class="tesis-title">Análisis de Big Data en el Sector Salud</span>
+                            <span class="status pendiente">Pendiente</span>
+                        </div>
+                        <p><strong>Estudiante:</strong> Carlos Ramírez</p>
+                        <p><strong>Fecha de entrega:</strong> 20/10/2025</p>
+                        <button class="btn-secondary" onclick="mostrarFormCalificacion(this)">Calificar</button>
+                    </div>
+                </div>
+
+                <div class="card" id="formCalificacion" style="display:none;">
+                    <h3>Calificar Tesis</h3>
+                    <div class="form-group">
+                        <label>Calificación (0-20):</label>
+                        <input type="number" min="0" max="20" step="0.5" placeholder="Ingrese la nota">
+                    </div>
+                    <div class="form-group">
+                        <label>Comentarios y Observaciones:</label>
+                        <textarea placeholder="Ingrese sus comentarios detallados..."></textarea>
+                    </div>
+                    <div class="form-inline">
+                        <button class="btn">Guardar Calificación</button>
+                        <button class="btn-secondary" onclick="ocultarFormCalificacion()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD ADMINISTRADOR -->
+    <div class="container" id="administradorContainer">
+        <div class="dashboard" id="administradorDashboard">
+            <div class="header">
+                <h2>⚙️ Panel del Administrador</h2>
+                <div class="user-info">
+                    <span id="administradorNombre"></span>
+                    <div class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Total Tesis</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Calificadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">En Proceso</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Pendientes</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Gestión de Usuarios</h3>
+                    <div class="form-inline">
+                        <button class="btn-secondary" onclick="mostrarRegistroEstudiante()">➕ Nuevo Estudiante</button>
+                        <button class="btn-secondary" onclick="mostrarRegistroProfesor()">➕ Nuevo Profesor</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Asignación de Tesis a Profesores</h3>
+                    <div class="form-group">
+                        <label>Seleccionar Tesis:</label>
+                        <select>
+                            <option>Implementación de Blockchain en Sistemas Educativos</option>
+                            <option>Análisis de Big Data en el Sector Salud</option>
+                            <option>Sistema de Gestión Académica basado en IA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Asignar a Profesor:</label>
+                        <select>
+                            <option>Dr. Juan Pérez</option>
+                            <option>Dra. Ana López</option>
+                            <option>Dr. Roberto Silva</option>
+                        </select>
+                    </div>
+                    <button class="btn">Asignar Tesis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTRO DE ESTUDIANTE -->
+    <div class="container" id="registroEstudianteContainer">
+        <div class="dashboard" id="registroEstudianteDashboard">
+            <div class="header">
+                <h2>👨‍🎓 Registro de Nuevo Estudiante</h2>
+                <div class="user-info">
+                    <div class="back-btn" onclick="volverAdministrador()">⬅ Volver</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <h3>Datos del Estudiante</h3>
+                    
+                    <div class="success-message" id="successEstudiante"></div>
+                    <div class="error-message" id="errorEstudiante"></div>
+                    
+                    <form id="formRegistroEstudiante">
+                        <div class="form-group">
+                            <label>Nombre Completo:</label>
+                            <input type="text" id="nombreEstudiante" placeholder="Ej: Juan Carlos Pérez García" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Correo Electrónico:</label>
+                            <input type="email" id="emailEstudiante" placeholder="estudiante@universidad.edu" required>
+                        </div>
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Código de Estudiante:</label>
+                                <input type="text" id="codigoEstudiante" placeholder="EST001" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>DNI/Documento:</label>
+                                <input type="text" id="dniEstudiante" placeholder="12345678" required>
+                            </div>
+                        </div>
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Carrera:</label>
+                                <select id="carreraEstudiante" required>
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                                    <option value="Ingeniería de Software">Ingeniería de Software</option>
+                                    <option value="Ciencias de la Computación">Ciencias de la Computación</option>
+                                    <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Semestre:</label>
+                                <input type="number" id="semestreEstudiante" min="1" max="12" placeholder="10" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <input type="password" id="passwordEstudiante" placeholder="Mínimo 6 caracteres" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirmar Contraseña:</label>
+                            <input type="password" id="confirmPasswordEstudiante" placeholder="Repita la contraseña" required>
+                        </div>
+
+                        <div class="form-inline">
+                            <button type="submit" class="btn">💾 Registrar Estudiante</button>
+                            <button type="button" class="btn-secondary" onclick="limpiarFormEstudiante()">🔄 Limpiar Formulario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTRO DE PROFESOR -->
+    <div class="container" id="registroProfesorContainer">
+        <div class="dashboard" id="registroProfesorDashboard">
+            <div class="header">
+                <h2>👨‍🏫 Registro de Nuevo Profesor</h2>
+                <div class="user-info">
+                    <div class="back-btn" onclick="volverAdministrador()">⬅ Volver</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <h3>Datos del Profesor</h3>
+                    
+                    <div class="success-message" id="successProfesor"></div>
+                    <div class="error-message" id="errorProfesor"></div>
+                    
+                    <form id="formRegistroProfesor">
+                        <div class="form-group">
+                            <label>Nombre Completo:</label>
+                            <input type="text" id="nombreProfesor" placeholder="Ej: Dr. María Elena López García" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Correo Electrónico:</label>
+                            <input type="email" id="emailProfesor" placeholder="profesor@universidad.edu" required>
+                        </div>
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Código de Profesor:</label>
+                                <input type="text" id="codigoProfesor" placeholder="PROF001" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>DNI/Documento:</label>
+                                <input type="text" id="dniProfesor" placeholder="12345678" required>
+                            </div>
+                        </div>
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Grado Académico:</label>
+                                <select id="gradoProfesor" required>
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="Licenciado">Licenciado</option>
+                                    <option value="Magíster">Magíster</option>
+                                    <option value="Doctor">Doctor</option>
+                                    <option value="PhD">PhD</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Especialidad:</label>
+                                <select id="especialidadProfesor" required>
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                                    <option value="Redes y Comunicaciones">Redes y Comunicaciones</option>
+                                    <option value="Base de Datos">Base de Datos</option>
+                                    <option value="Ingeniería de Software">Ingeniería de Software</option>
+                                    <option value="Seguridad Informática">Seguridad Informática</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Departamento:</label>
+                            <select id="departamentoProfesor" required>
+                                <option value="">-- Seleccione --</option>
+                                <option value="Ciencias de la Computación">Ciencias de la Computación</option>
+                                <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                                <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <input type="password" id="passwordProfesor" placeholder="Mínimo 6 caracteres" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirmar Contraseña:</label>
+                            <input type="password" id="confirmPasswordProfesor" placeholder="Repita la contraseña" required>
+                        </div>
+
+                        <div class="form-inline">
+                            <button type="submit" class="btn">💾 Registrar Profesor</button>
+                            <button type="button" class="btn-secondary" onclick="limpiarFormProfesor()">🔄 Limpiar Formulario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos simulada de usuarios
+        const usuarios = {
+            estudiante: {
+                usuario: 'est001',
+                password: '123',
+                nombre: 'Juan Estudiante'
+            },
+            profesor: {
+                usuario: 'prof001',
+                password: '123',
+                nombre: 'Dr. María Profesora'
+            },
+            administrador: {
+                usuario: 'admin',
+                password: '123',
+                nombre: 'Admin Sistema'
+            }
+        };
+
+        // Arrays para almacenar nuevos usuarios registrados
+        let estudiantesRegistrados = [];
+        let profesoresRegistrados = [];
+
+        // Manejo del formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rol = document.getElementById('rol').value;
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
+
+            if (!rol || !usuario || !password) {
+                mostrarError('Por favor, complete todos los campos');
+                return;
+            }
+
+            if (usuarios[rol] && 
+                usuarios[rol].usuario === usuario && 
+                usuarios[rol].password === password) {
+                
+                iniciarSesion(rol, usuarios[rol].nombre);
+            } else {
+                mostrarError('⚠️ Credenciales incorrectas. Intente nuevamente.');
+            }
+        });
+
+        // Manejo del formulario de registro de estudiante
+        document.getElementById('formRegistroEstudiante').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombreEstudiante').value;
+            const email = document.getElementById('emailEstudiante').value;
+            const codigo = document.getElementById('codigoEstudiante').value;
+            const dni = document.getElementById('dniEstudiante').value;
+            const carrera = document.getElementById('carreraEstudiante').value;
+            const semestre = document.getElementById('semestreEstudiante').value;
+            const password = document.getElementById('passwordEstudiante').value;
+            const confirmPassword = document.getElementById('confirmPasswordEstudiante').value;
+
+            if (password.length < 6) {
+                mostrarMensaje('errorEstudiante', '⚠️ La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                mostrarMensaje('errorEstudiante', '⚠️ Las contraseñas no coinciden');
+                return;
+            }
+
+            const nuevoEstudiante = {
+                nombre, email, codigo, dni, carrera, semestre, password,
+                fechaRegistro: new Date().toLocaleDateString()
+            };
+
+            estudiantesRegistrados.push(nuevoEstudiante);
+            
+            mostrarMensaje('successEstudiante', `✅ Estudiante ${nombre} registrado exitosamente con código ${codigo}`);
+            limpiarFormEstudiante();
+            
+            console.log('Estudiantes registrados:', estudiantesRegistrados);
+        });
+
+        // Manejo del formulario de registro de profesor
+        document.getElementById('formRegistroProfesor').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombreProfesor').value;
+            const email = document.getElementById('emailProfesor').value;
+            const codigo = document.getElementById('codigoProfesor').value;
+            const dni = document.getElementById('dniProfesor').value;
+            const grado = document.getElementById('gradoProfesor').value;
+            const especialidad = document.getElementById('especialidadProfesor').value;
+            const departamento = document.getElementById('departamentoProfesor').value;
+            const password = document.getElementById('passwordProfesor').value;
+            const confirmPassword = document.getElementById('confirmPasswordProfesor').value;
+
+            if (password.length < 6) {
+                mostrarMensaje('errorProfesor', '⚠️ La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                mostrarMensaje('errorProfesor', '⚠️ Las contraseñas no coinciden');
+                return;
+            }
+
+            const nuevoProfesor = {
+                nombre, email, codigo, dni, grado, especialidad, departamento, password,
+                fechaRegistro: new Date().toLocaleDateString()
+            };
+
+            profesoresRegistrados.push(nuevoProfesor);
+            
+            mostrarMensaje('successProfesor', `✅ Profesor ${nombre} registrado exitosamente con código ${codigo}`);
+            limpiarFormProfesor();
+            
+            console.log('Profesores registrados:', profesoresRegistrados);
+        });
+
+        function mostrarError(mensaje) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.textContent = mensaje;
+            errorMsg.style.display = 'block';
+            
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        function mostrarMensaje(elementId, mensaje) {
+            const elemento = document.getElementById(elementId);
+            elemento.textContent = mensaje;
+            elemento.style.display = 'block';
+            
+            setTimeout(() => {
+                elemento.style.display = 'none';
+            }, 5000);
+        }
+
+        function iniciarSesion(rol, nombre) {
+            document.getElementById('loginContainer').classList.remove('active');
+            
+            setTimeout(() => {
+                const container = document.getElementById(rol + 'Container');
+                const dashboard = document.getElementById(rol + 'Dashboard');
+                const nombreElement = document.getElementById(rol + 'Nombre');
+                
+                nombreElement.textContent = nombre;
+                container.classList.add('active');
+                dashboard.classList.add('active');
+            }, 300);
+        }
+
+        function cerrarSesion() {
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.dashboard').forEach(dashboard => {
+                dashboard.classList.remove('active');
+            });
+            
+            document.getElementById('loginForm').reset();
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            setTimeout(() => {
+                document.getElementById('loginContainer').classList.add('active');
+            }, 300);
+        }
+
+        function mostrarRegistroEstudiante() {
+            document.getElementById('administradorContainer').classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('registroEstudianteContainer').classList.add('active');
+                document.getElementById('registroEstudianteDashboard').classList.add('active');
+            }, 300);
+        }
+
+        function mostrarRegistroProfesor() {
+            document.getElementById('administradorContainer').classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('registroProfesorContainer').classList.add('active');
+                document.getElementById('registroProfesorDashboard').classList.add('active');
+            }, 300);
+        }
+
+        function volverAdministrador() {
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.dashboard').forEach(dashboard => {
+                dashboard.classList.remove('active');
+            });
+            
+            setTimeout(() => {
+                document.getElementById('administradorContainer').classList.add('active');
+                document.getElementById('administradorDashboard').classList.add('active');
+            }, 300);
+        }
+
+        function limpiarFormEstudiante() {
+            document.getElementById('formRegistroEstudiante').reset();
+        }
+
+        function limpiarFormProfesor() {
+            document.getElementById('formRegistroProfesor').reset();
+        }
+
+        function mostrarFormCalificacion(btn) {
+            const formCalificacion = document.getElementById('formCalificacion');
+            formCalificacion.style.display = 'block';
+            formCalificacion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function ocultarFormCalificacion() {
+            document.getElementById('formCalificacion').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
