@@ -1,0 +1,106 @@
+Informe Técnico: Sistema de Gestión de Grados y Títulos (CODEX)
+1. Resumen Ejecutivo
+El proyecto consiste en una plataforma web integral diseñada para la Facultad de Ingeniería de la Universidad Peruana Los Andes (UPLA). El sistema digitaliza y automatiza el flujo de trabajo para la obtención del título profesional, gestionando desde la carga del proyecto de tesis hasta la sustentación y emisión del acta de titulación.
+El sistema se destaca por una interfaz moderna, roles de usuario diferenciados (Administrador, Docente, Estudiante) y un motor de evaluación basado en rúbricas dinámicas.
+2. Arquitectura del Sistema
+2.1 Stack Tecnológico
+•	Frontend: HTML5, CSS3 (TailwindCSS para estilizado utilitario), JavaScript (Vanilla JS para lógica de modales y AJAX).
+•	Backend: Java EE (Jakarta EE), JSP (JavaServer Pages), JSTL (JSP Standard Tag Library).
+•	Diseño: Estilo "CODEX Blue/Gold Tech Premium" con efectos de desenfoque (backdrop-filter) y animaciones CSS.
+2.2 Módulos por Rol
+El sistema se divide en tres portales principales:
+A. Portal Administrativo (admin.jsp)
+Es el centro de control del sistema.
+•	Gestión de Usuarios: CRUD completo para Docentes y Estudiantes con búsqueda en tiempo real.
+•	Gestión de Tesis: Asignación de asesores, revisión de estados y reasignación de proyectos.
+•	Control de Trámites: Flujo de titulación (Iniciado -> Revisión -> Designación de Jurado -> Sustentación -> Titulado).
+•	Resoluciones: Generación automática de documentos oficiales (Resolución de Asesoría, Resolución de Jurados) listos para imprimir.
+•	Designación de Jurado: Algoritmo manual/asistido para asignar Presidente, Secretario, Vocal y Suplente.
+B. Portal del Docente (teacher.jsp)
+Permite al catedrático actuar bajo dos roles simultáneos:
+•	Rol Asesor: Revisa las tesis asignadas, descarga el PDF y califica usando una rúbrica de 38 ítems (Título, Problema, Hipótesis, etc.) con puntajes de 0.0, 0.5 o 1.0.
+•	Rol Jurado: Visualiza las sustentaciones programadas, revisa el expediente y emite su voto/calificación durante la defensa oral.
+•	Reportes: Generación de reportes CSV de tesis asignadas.
+C. Portal del Estudiante (student.jsp)
+Interfaz gamificada para el seguimiento del egresado.
+•	Línea de Tiempo: Barra de progreso visual que muestra la fase actual del trámite (Step-by-step).
+•	Carga de Archivos: Subida de versiones de tesis (PDF) y requisitos administrativos (DNI, Bachiller, Idiomas).
+•	Visualización de Resultados: Gráficos circulares para ver la nota del proyecto y acceso a las resoluciones emitidas.
+•	Acta Digital: Visualización del Acta de Sustentación final si el alumno aprueba.
+3. Diseño e Implementación de Base de Datos
+Basado en la lógica de negocio extraída de los JSPs (c:forEach items="${lista...}" y los parámetros de formularios), se ha reconstruido el esquema relacional necesario para soportar este sistema.
+3.1 Esquema Relacional (Tablas Inferidas)
+1. Tabla usuarios
+Almacena las credenciales y datos personales.
+•	codigo (PK, VARCHAR): Código universitario.
+•	password (VARCHAR): Contraseña encriptada.
+•	nombres (VARCHAR).
+•	apellidos (VARCHAR).
+•	email (VARCHAR): Correo institucional.
+•	rol (ENUM): 'admin', 'docente', 'alumno'.
+
+2. Tabla tesis
+El núcleo académico del sistema.
+•	id_tesis (PK, INT, AI).
+•	titulo (VARCHAR).
+•	archivo_path (VARCHAR): Ruta del PDF en el servidor.
+•	id_alumno (FK -> usuarios.codigo): Relación 1 a 1.
+•	id_docente (FK -> usuarios.codigo): Asesor asignado.
+•	estado (ENUM): 'Pendiente', 'En Proceso', 'Aprobado', 'Observado'.
+3. Tabla evaluaciones (Fase de Asesoría)
+Almacena la calificación detallada del proyecto de tesis.
+•	id_evaluacion (PK, INT).
+•	id_tesis (FK).
+•	id_docente (FK).
+•	puntaje_total (DECIMAL): Suma de los ítems.
+•	comentarios (TEXT).
+•	fecha_evaluacion (DATETIME).
+•	item_1 ... item_38 (DECIMAL): Guarda el puntaje individual (0.0, 0.5, 1.0) de cada criterio de la rúbrica.
+4. Tabla tramites
+Gestiona el flujo administrativo post-aprobación de tesis.
+•	id_tramite (PK, INT).
+•	id_alumno (FK).
+•	estado_actual (ENUM): 'Iniciado', 'Revisión de Carpeta', 'Designación de Jurado', 'Apto para Sustentar', 'Sustentación Programada', 'Titulado'.
+5. Tabla documentos
+Requisitos subidos por el alumno para la carpeta de titulación.
+•	id_documento (PK).
+•	id_tramite (FK).
+•	tipo_documento (ENUM): 'DNI', 'Bachiller', 'Certificado_Idiomas', etc..
+•	ruta_archivo (VARCHAR).
+•	estado_validacion (ENUM): 'Pendiente', 'Validado', 'Rechazado'.
+•	observacion (TEXT): Motivo de rechazo si aplica.
+6. Tabla sustentaciones (Defensa Oral)
+Vincula el trámite con el jurado y la fecha de defensa.
+•	id_sustentacion (PK).
+•	id_tramite (FK).
+•	cod_miembro1 (FK): Presidente.
+•	cod_miembro2 (FK): Secretario.
+•	cod_miembro3 (FK): Vocal.
+•	cod_suplente (FK): Suplente.
+•	fecha_hora (DATETIME).
+•	lugar_enlace (VARCHAR): Auditorio o Link Zoom.
+•	nota_final (DECIMAL): Promedio de los 3 jurados.
+•	estado_evaluacion (ENUM): 'Pendiente', 'Evaluado'.
+7. Tabla evaluaciones_jurado
+Votos individuales de cada miembro del jurado.
+•	id_voto (PK).
+•	id_sustentacion (FK).
+•	cod_jurado (FK).
+•	puntaje (DECIMAL).
+•	observaciones (TEXT).
+•	items_rubrica (JSON/Columnas): Detalle de la rúbrica de defensa.
+4. Características Clave de Implementación
+4.1 Rúbrica Dinámica de 38 Puntos
+Se implementó un sistema de evaluación granular. En teacher.jsp, se observa un bucle (c:forEach var="i" begin="1" end="38") que genera dinámicamente la tabla de calificación. Esto permite calcular automáticamente la nota final y la condición (Aprobado >= 25 pts aprox) mediante JavaScript en el cliente antes de enviar al servidor.
+4.2 Generación de Documentos (Resoluciones)
+El sistema no utiliza librerías externas complejas para generar PDFs visuales, sino que emplea CSS @media print.
+•	Se diseñaron modales con clases específicas (classic-paper-doc, doc-header, doc-body).
+•	Al hacer clic en "Imprimir", el sistema oculta toda la interfaz (visibility: hidden) y muestra solo el documento con formato oficial (Times New Roman, Justificado), permitiendo al navegador "Guardar como PDF" nativamente.
+4.3 Seguridad y Roles
+•	Se utiliza sessionScope.usuarioLogueado para validar la sesión en cada JSP.
+•	Lógica condicional (c:if) para mostrar/ocultar botones sensibles (ej. solo el admin puede ver el botón de "Eliminar Usuario", solo el jurado asignado puede ver el botón "Calificar").
+4.4 Interfaz de Usuario (UI)
+•	Notificaciones: Sistema de campana con contador en tiempo real (simulado o persistente) en el header.
+•	Feedback Visual: Uso de colores semánticos (Verde=Aprobado, Rojo=Desaprobado, Amarillo=Pendiente) y alertas (sweetalert o modales nativos estilizados) para confirmar acciones.
+5. Conclusión
+El sistema CODEX representa una solución robusta que cubre el ciclo de vida completo de la titulación en la UPLA. La estructura de base de datos relacional soporta la integridad de los datos académicos, mientras que la interfaz basada en JSP y Tailwind asegura una experiencia de usuario fluida y moderna.
